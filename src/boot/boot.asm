@@ -1,5 +1,20 @@
 %include "lib/defines.asm"
 
+%macro get_bpb_byte 1
+	xor eax, eax
+	mov byte al, [((BOOT1_ADDR) + (%1))]
+%endmacro
+
+%macro get_bpb_word 1
+	xor eax, eax
+	mov word ax, [((BOOT1_ADDR) + (%1))]
+%endmacro
+
+%macro get_bpb_dword 1
+	mov dword al, [((BOOT1_ADDR) + (%1))]
+%endmacro
+
+
 [org BOOT1_ADDR]
 [bits 16]
 
@@ -26,6 +41,11 @@ boot_resume:
 
 	mov si, msg
 	call print_line
+
+	get_bpb_byte BPB_OEM_LABEL
+
+	cli
+	hlt
 
 	call wait_shutdown
 
