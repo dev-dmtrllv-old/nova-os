@@ -54,8 +54,8 @@ build: $(ASM_BOOT_OBJS)
 build-disk: $(DISK_IMG) build
 	@sudo losetup -o $(PART_OFFSET) $(LOOP_DEV) $(DISK_IMG)
 	@dd bs=1 if=out/boot/mbr.o of=$(DISK_IMG) conv=notrunc status=progress
-	@sudo dd bs=1 if=out/boot/boot.o count=3 of=$(LOOP_DEV) conv=notrunc status=progress
-	@sudo dd bs=1 skip=$(BOOT_OFFSET) if=out/boot/boot.o iflag=skip_bytes of=$(LOOP_DEV) seek=$(BOOT_OFFSET) conv=notrunc status=progress
+	@sudo dd bs=1 if=out/boot/bpb.o count=3 of=$(LOOP_DEV) conv=notrunc status=progress
+	@sudo dd bs=1 skip=$(BOOT_OFFSET) if=out/boot/bpb.o iflag=skip_bytes of=$(LOOP_DEV) seek=$(BOOT_OFFSET) conv=notrunc status=progress
 	@sudo losetup -d $(LOOP_DEV)
 
 run: build-disk

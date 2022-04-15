@@ -54,7 +54,9 @@ partition_found: 							; bx contains partition table entry address
 	mov word [dap_sectors], 1				; only load 1 sector (the boot sector of the partition)
 	call read_sectors
 
-	jmp 0:BOOT1_ADDR
+	xor edx, edx							; set the edx booted drive number 
+	mov dl, [booted_drive_index]
+	jmp 0:BOOT1_ADDR						; and jump to the bootloader
 	hlt
 
 drive_ext_not_present_error:
