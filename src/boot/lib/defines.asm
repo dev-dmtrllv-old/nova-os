@@ -2,7 +2,7 @@
 %define BOOT2_ADDR 						0x1000						; Address of the second stage
 %define MBR_ADDR						0x7A00						; Address of the relocated MBR
 
-%define STACK_ADDR						0xFFFE						; Address of the stack
+%define STACK_ADDR						0xF000						; Address of the stack
 
 %define PTABLE_OFFSET					0x01BE						; Address of the partition table
 %define PENTRY_SIZE						0x10						; Size of each partition entry
