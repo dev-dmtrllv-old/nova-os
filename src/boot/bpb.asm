@@ -1,3 +1,6 @@
+; TODO:
+; 	- test when booting with only one partition and when there is no MBR available
+
 %include "lib/defines.asm"
 
 %macro get_bpb_byte 1
