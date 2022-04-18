@@ -1,3 +1,10 @@
+; TODO:
+;  - enable A20
+;  - get BIOS memory map
+;  - load a GDT
+;  - load the kernel
+;  - enter Protected Mode
+
 %include "lib/defines.asm"
 
 [org BOOT2_ADDR]
