@@ -20,14 +20,29 @@ boot:
 	cld										; clear direction flag
 	sti
 
-	mov si, hello
+	call check_a20
+	cmp eax, 0
+	jne a20_enabled
+	call enable_a20
+	cmp eax, 0
+	jne a20_failed
+
+a20_enabled:
+	
+
+	jmp exit
+
+a20_failed:
+	mov si, a20_error_msg
 	call print_line
 
+exit:
 	call wait_shutdown
 
-hello:		db "Hello :D", 0
+a20_error_msg:		db "Could not enable A20!", 0
 
 %include "lib/common.asm"
 %include "lib/print.asm"
 %include "lib/disk.asm"
+%include "lib/a20.asm"
 
