@@ -28,8 +28,20 @@ boot:
 	jne a20_failed
 
 a20_enabled:
+	mov di, bios_mem_map
+	call get_mem_map
+	jc get_mem_map_failed
+	mov [bios_mem_map_entry_count], bp
 	
 
+	
+	cli
+	hlt
+	jmp exit
+
+get_mem_map_failed:
+	mov si, mem_map_error_msg
+	call print_line
 	jmp exit
 
 a20_failed:
@@ -39,10 +51,14 @@ a20_failed:
 exit:
 	call wait_shutdown
 
-a20_error_msg:		db "Could not enable A20!", 0
+a20_error_msg:			db "Could not enable A20!", 0
+mem_map_error_msg:		db "get_mem_map failed!", 0
 
 %include "lib/common.asm"
 %include "lib/print.asm"
 %include "lib/disk.asm"
 %include "lib/a20.asm"
+%include "lib/mmap.asm"
 
+bios_mem_map_entry_count: dw 0
+bios_mem_map:
